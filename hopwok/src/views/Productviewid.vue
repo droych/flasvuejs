@@ -4,7 +4,7 @@ import TryComp from '../components/TryComp.vue';
 </script>
 <template>
     <div >
-      <Productviewid /> 
+      <ProductDetails  :id = "parseInt($route.params.id)" />     
     </div>
   </template>
 <style>

@@ -8,10 +8,10 @@ import Productviewid from './Productviewid.vue';
 </script>
 <template>
     <div > 
-     
+     <TryComp />
       
      
-     <TryComp  :id = "id" />    
+    
 
       
     </div>
