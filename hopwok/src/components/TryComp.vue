@@ -1,39 +1,8 @@
 <script  setup>
 import {ref, onMounted } from 'vue';
-const props = defineProps({
-      msg :{
-        type: String,
-        required: true
 
-      },
-      image: {
-        type: String,
-        
 
-      },
-      Instock:{
-        type: Boolean
-        
-        
-      },
-
-      image :{
-        type:String
-      },
-     
-     
-      props:{
-        id:
-        {
-            type:Number
-        }
-
-     }
-     
-
-    })
-
-    const products = ref([""])
+    const products = ref([{id: 0, image: "", product_name: "", product_rate: ""}])
 async function api(url) {
   const response = await fetch(url);
 if (!response.ok) {
