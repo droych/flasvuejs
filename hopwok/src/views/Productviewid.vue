@@ -3,7 +3,9 @@ import ProductDetails from '@/components/ProductDetails.vue';
 </script>
 <template>
     <div >
-      <ProductDetails :id  = "id" /> 
+
+      <ProductDetails  :id = "parseInt($route.params.id)" />     
+
     </div>
   </template>
 <style>
@@ -20,4 +22,6 @@ import ProductDetails from '@/components/ProductDetails.vue';
    
   }
 </style>
+  
+
   
