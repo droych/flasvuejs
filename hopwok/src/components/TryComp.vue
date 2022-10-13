@@ -2,7 +2,7 @@
 import {ref, onMounted } from 'vue';
 
 
-    const products = ref([{id: 0, image: "", product_name: "", product_rate: ""}])
+const products = ref[{}]
 async function api(url) {
   const response = await fetch(url);
 if (!response.ok) {
@@ -12,9 +12,6 @@ return await response.json();
 }
 function getproduct() {
 api('http://127.0.0.1:5000/products')
-
-    
-    
     .then((data) => {products.value = data})
     .catch(error => {console.log(error.toString())
   }
@@ -41,9 +38,6 @@ onMounted(() => getproduct())
             <router-link  :to ="{ path: `/product/${product.id}` }"> View details </router-link>
             <div class="price">
            <h3>Price : ₹{{product.product_rate}}</h3>
-        
-         
-
          </div>
          <a class ="a" href="http://127.0.0.1:5173/">Buy Now</a>
         <a class ="a" href="#">Add to cart</a>
@@ -309,4 +303,5 @@ a{
 }
 
 </style>
+
 
