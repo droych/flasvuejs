@@ -24,10 +24,16 @@ const props =  defineProps({
   
         id:{
             type:Number
+        },
+        cart:{
+          type : Number,
+        
+      
+
         }
      
     })
-    const productid = ref({id: 0, image: "", product_name: "", product_rate: ""})
+    const productid = {}
 
   
 async function api(url) {
@@ -42,7 +48,7 @@ function getproduct() {
 api(`http://127.0.0.1:5000/product/${props.id}/`)
 
 
-   .then((data) => {productid.value = data})
+   .then((data) => {productid = data})
    
    
     .catch(error => {console.log(error.toString())
@@ -51,9 +57,18 @@ api(`http://127.0.0.1:5000/product/${props.id}/`)
 }
 onMounted(() => getproduct())
 
+function addtoCart(){
+
+this.cart+=1
+ }
+
+
     </script>
     
     <template>
+      <header>
+      <div class = "cart" >cart   {{cart}} </div>
+      </header>
   
     <section>
       <main>
@@ -61,24 +76,21 @@ onMounted(() => getproduct())
         <div class="container"> 
           <div class="card">
           <div class="imgBx">
-          <p>{{productid.id}}</p>
-            <img v-bind:src = "productid.image" >
+        
+            <img v-bind:src = "product.image" >
           </div>
-        <div class="contentBx">
-           <h2>{{productid.product_name}}</h2>
-        <div class="price">
-           <h3>Price : ₹{{productid.product_rate}}</h3>
-          
-          
-           
-         </div>
-         <a class ="a" href="http://127.0.0.1:5173/">Buy Now</a>
-        <a class ="a" href="#">Add to cart</a>
+        
+           <h2>{{product.product_name}}</h2>
+           <h3>Price : ₹{{product.product_rate}}</h3>
+        
+         
+        <button class ="button" v-on:click="addtoCart"> Add to cart </button>
+        <button class ="button2"> Wishlist </button>
     </div>
     </div>
 
 </div> 
-</div>
+
 
   </main>
   </section>
@@ -110,15 +122,16 @@ body{
 }
 .card {
 
-
+  width: 1000px;
+  
   gap: 2rem;
   padding: 0;
   list-style-type: none;
 }
 .container .card{
   position: relative;
-  width: 320px;
-  height: 450px;
+  width: 1020px;
+  height: 420px;
   background: rgba(136, 105, 129, 0.39);
   border-radius: 20px;
   overflow: hidden;
@@ -157,13 +170,23 @@ body{
   font-style: italic;
   color: rgba(101, 101, 100, 0.05)
 }
+.imgBx{
+  position: absolute;
+  top: 50%;
+  left: -600px;
+  transform: translateY(-50%);
+  z-index: 1;
+  width: 90%;
+
+  transition: 0.5s;
+}
 
 .container .card .imgBx{
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
   z-index: 10000;
-  width: 50%;
+  width: 70%;
   height: 120px;
   transition: 0.5s;
 }
@@ -188,20 +211,46 @@ body{
   width: 100%;
   height: 100px;
   text-align: center;
-  transition: 1s;
-  z-index: 10;
+ 
 }
 .fetch {
     list-style: none;
     padding: 0;
     margin: 0;
-    width:400px;
+    width:1200px;
 
   
   
   }
 .container .card:hover .contentBx{
   height: 210px;
+}
+h2{
+  position: relative;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: #000;
+  margin: 0;
+  left:250px;
+  top:80px;
+  
+
+}
+h3{
+  position: relative;
+ 
+  letter-spacing: 1px;
+  color: #000;
+  margin: 0;
+  left:250px;
+  top:80px;
+  color: rgb(0, 0, 0);
+  font-weight: 300;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-right: 10px;
+
 }
 
 .container .card .contentBx h2{
@@ -247,7 +296,7 @@ body{
 
 .container .card .contentBx .price span{
   width: 26px;
-  height: 26px;
+  height: 100px;
   text-align: center;
   line-height: 26px;
   font-size: 14px;
@@ -268,23 +317,42 @@ body{
 
 .container .card .contentBx .color span{
   width: 20px;
-  height: 20px;
+  height: 100px;
   background: #ff0;
   border-radius: 50%;
   margin: 0 5px;
   cursor: pointer;
 }
 
-.container .card .contentBx .color span:nth-child(2){
-  background: #9bdc28;
-}
 
-.container .card .contentBx .color span:nth-child(3){
-  background: #03a9f4;
-}
+.button{
+  position: relative;
+  display: inline-block;
+  padding: 10px 20px;
+  background: #23730f;
+  left:250px;
+  top:200px;
+  font-weight: 600;
+  color: #111;
+  border-radius: 8px;
 
-.container .card .contentBx .color span:nth-child(4){
-  background: #e91e63;
+  
+
+}
+.button2{
+  position: relative;
+  display: inline-block;
+  padding: 10px 20px;
+  background: #981515;
+  margin-left: 10px;
+  left:250px;
+  top:200px;
+  font-weight: 600;
+  color: #111;
+  border-radius: 8px;
+
+  
+
 }
 
 .container .card .contentBx .a{
@@ -312,7 +380,7 @@ a{
   margin-right: 10px;
   top: -5px;
 }
-.container .card:hover .contentBx .a{
+.container .card:hover {
   opacity: 1;
   transform: translateY(0px);
   transition-delay: 0.75s;
