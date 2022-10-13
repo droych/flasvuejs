@@ -1,21 +1,10 @@
 <script setup>
 import TryComp from '@/components/TryComp.vue';
-
-
-
-
 </script>
 <template>
     <div > 
-     
-      
-     
      <TryComp />    
-
-      
     </div>
-   
-
 </template>
   
   
@@ -29,9 +18,8 @@ import TryComp from '@/components/TryComp.vue';
       display: flex;
       align-items: center;
     }
-    
-
-   
   }
 </style>
+  
+
   
