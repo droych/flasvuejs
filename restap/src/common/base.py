@@ -9,7 +9,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 
 api = Api(app)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:2176@localhost:3306/inventory'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:2176@localhost:3306/inventory4'
 app.config["SECRET_KEY"] = "restapi"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] =  False
 db = SQLAlchemy(app)

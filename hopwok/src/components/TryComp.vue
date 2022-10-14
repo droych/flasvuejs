@@ -45,7 +45,6 @@ function getproduct() {
 api('http://127.0.0.1:9000/products')
 
     
-    
     .then((data) => {products.value = data})
     .catch(error => {console.log(error.toString())
   }

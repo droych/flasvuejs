@@ -1,10 +1,8 @@
-#from src.db.addorders import orders_schema, order_schema
+
 from flask_restful import Resource, request
-
-
-from src.db.model import Orders, Product, User, OrderItems, Cart
+from src.db.model import Orders, Product, User,  Cart
 from src.schemas.cart import carts_schema,cart_schema
-from flask import make_response, jsonify
+from flask import  jsonify
 from flask_jwt_extended import get_jwt_identity, jwt_required
 from src.common.base import db
 from src.decor.admindec import admin_required
@@ -12,7 +10,6 @@ from src.decor.userdec import user_required
 
 
 class CartListResource(Resource):
-
     @jwt_required()
     @admin_required([1])
     def get(self):
@@ -55,8 +52,6 @@ class CartListResource(Resource):
            db.session.commit()
         response = jsonify("added to cart", {"cart total":_cart_total})
         return response
-
-
 
 class CartResource(Resource):
     @jwt_required()

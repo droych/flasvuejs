@@ -44,21 +44,14 @@ throw new Error(response.statusText);
 return await response.json();
 }
 function getproduct() {
- 
 api(`http://127.0.0.1:9000/product/${props.id}`)
-
-
    .then((data) => {product.value = data})
-   
-   
-    .catch(error => {console.log(error.toString())
+   .catch(error => {console.log(error.toString())
   }
 )  
 }
 onMounted(() => getproduct())
-
 function addtoCart(_cart_item ){
-
 const requestOptions = {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -68,12 +61,13 @@ const requestOptions = {
     .then(response => response.json())
     .then(data => (_cart_item = data.id));
 }
-
- 
-
-
     </script>
     
+    
+
+
+
+
     <template>
       <header>
       <div class = "cart" > cart{{cart_item}} </div>

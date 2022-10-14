@@ -15,6 +15,15 @@ class OrderItems(db.Model):
         email = db.Column(db.String(120), index=True)
         order = db.relationship('Orders', back_populates='orderitems')
         product = db.relationship('Product', back_populates='orderitems')
+class Cart(db.Model):
+    __tablename__ = 'cart'
+
+    UserId = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False, primary_key=True)
+    quantity = db.Column('quantity', db.Integer, nullable=False)
+    productId = db.Column(db.Integer, db.ForeignKey('products.id'), nullable=False,primary_key=True)
+    total = db.Column(db.Float(20))
+
+
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -27,6 +36,7 @@ class User(db.Model):
     role = db.Column(db.Integer, index=True, default=0)
     created = db.Column(db.DateTime(timezone=True), default=db.func.current_timestamp(), nullable=False)
     order = db.relationship("Orders", backref='users',lazy = True)
+    cartitem = db.relationship('Cart', backref='user', lazy=True)
     def __repr__(self):
         return '<User %s>' % self.name
 class Product(db.Model):
@@ -34,13 +44,14 @@ class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement = True)
     product_name = db.Column(db.String(50))
     product_rate = db.Column(db.Float(precision=2))
-    image = db.Column(db.String(60))
-    quantity = db.Column(db.Integer,nullable=False)
-   # order = db.relationship("OrderItems", back_populates="xyz")
+    quantity = db.Column(db.Integer)
+    image = db.Column(db.String(500))
     orderitems = db.relationship('OrderItems', back_populates='product', lazy=True)
+    cartitem = db.relationship('Cart', backref='product', lazy=True)
 
     def __repr__(self):
         return '<Product %s>' % self.product_name
+
 
 
 class Orders(db.Model):
@@ -59,3 +70,5 @@ class Orders(db.Model):
     def __repr__(self):
         return '<Orders %s>' % self.name
 
+db.drop_all()
+db.create_all()
