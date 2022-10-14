@@ -22,9 +22,10 @@ const props =  defineProps({
         type:String
       },
   
-        id:{
+      id:{
             type:Number
-        },
+        
+      },
         cart:{
           type : Number,
         
@@ -33,8 +34,7 @@ const props =  defineProps({
         }
      
     })
-    const productid = {}
-
+const product = ref({})
   
 async function api(url) {
   const response = await fetch(url);
@@ -45,10 +45,10 @@ return await response.json();
 }
 function getproduct() {
  
-api(`http://127.0.0.1:5000/product/${props.id}/`)
+api(`http://127.0.0.1:5000/product/${props.id}`)
 
 
-   .then((data) => {productid = data})
+   .then((data) => {product.value = data})
    
    
     .catch(error => {console.log(error.toString())
@@ -191,7 +191,7 @@ body{
   transition: 0.5s;
 }
 
-.container .card:hover .imgBx{
+.container .card:hove{
   top: 0%;
   transform: translateY(0%);
     
@@ -389,4 +389,6 @@ a{
 
    
     </style>
+    
+
     
