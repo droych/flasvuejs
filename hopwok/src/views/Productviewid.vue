@@ -23,5 +23,3 @@ import ProductDetails from '@/components/ProductDetails.vue';
   }
 </style>
   
-
-  
