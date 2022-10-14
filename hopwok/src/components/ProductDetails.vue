@@ -26,23 +26,14 @@ const props =  defineProps({
             type:Number
         
       },
-<<<<<<< HEAD
+
       cart_item :{
           type : Object,
         
       
 
         },
-        
-=======
-        cart:{
-          type : Number,
-        
-      
 
-        }
-     
->>>>>>> fca5a99655e8b8df38df2537c2b42838914a3109
     })
 const product = ref({})
   
@@ -54,25 +45,16 @@ throw new Error(response.statusText);
 return await response.json();
 }
 function getproduct() {
-<<<<<<< HEAD
+
 api(`http://127.0.0.1:9000/product/${props.id}`)
    .then((data) => {product.value = data})
    .catch(error => {console.log(error.toString())
-=======
- 
-api(`http://127.0.0.1:5000/product/${props.id}`)
 
-
-   .then((data) => {product.value = data})
-   
-   
-    .catch(error => {console.log(error.toString())
->>>>>>> fca5a99655e8b8df38df2537c2b42838914a3109
   }
 )  
 }
 onMounted(() => getproduct())
-<<<<<<< HEAD
+
 function addtoCart(_cart_item ){
 const requestOptions = {
     method: "POST",
@@ -83,15 +65,7 @@ const requestOptions = {
     .then(response => response.json())
     .then(data => (_cart_item = data.id));
 }
-=======
 
-function addtoCart(){
-
-this.cart+=1
- }
-
-
->>>>>>> fca5a99655e8b8df38df2537c2b42838914a3109
     </script>
     
     
@@ -101,12 +75,9 @@ this.cart+=1
 
     <template>
       <header>
-<<<<<<< HEAD
+
       <div class = "cart" > cart{{cart_item}} </div>
-=======
-      <div class = "cart" >cart   {{cart}} </div>
->>>>>>> fca5a99655e8b8df38df2537c2b42838914a3109
-      </header>
+
   
     <section>
       <main>
@@ -122,14 +93,11 @@ this.cart+=1
            <h3>Price : ₹{{product.product_rate}}</h3>
         
          
-<<<<<<< HEAD
+
         <button class ="button" @click="addtoCart({ product_id: product.id})"> Add to cart </button>
         <button class ="button2"> Wishlist </button>
 
-=======
-        <button class ="button" v-on:click="addtoCart"> Add to cart </button>
-        <button class ="button2"> Wishlist </button>
->>>>>>> fca5a99655e8b8df38df2537c2b42838914a3109
+
     </div>
     </div>
 
