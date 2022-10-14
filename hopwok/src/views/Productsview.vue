@@ -21,3 +21,5 @@ import TryComp from '@/components/TryComp.vue';
   }
 </style>
   
+
+  
