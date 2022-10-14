@@ -1,6 +1,6 @@
 <script setup>
-import {ref, onMounted } from 'vue';
-
+import {ref } from 'vue';
+import {onMounted, onRenderTriggered } from 'vue';
 const props =  defineProps({
       msg :{
         type: String,
@@ -26,13 +26,13 @@ const props =  defineProps({
             type:Number
         
       },
-        cart:{
-          type : Number,
+      cart_item :{
+          type : Object,
         
       
 
-        }
-     
+        },
+        
     })
 const product = ref({})
   
@@ -45,7 +45,7 @@ return await response.json();
 }
 function getproduct() {
  
-api(`http://127.0.0.1:5000/product/${props.id}`)
+api(`http://127.0.0.1:9000/product/${props.id}`)
 
 
    .then((data) => {product.value = data})
@@ -57,17 +57,26 @@ api(`http://127.0.0.1:5000/product/${props.id}`)
 }
 onMounted(() => getproduct())
 
-function addtoCart(){
+function addtoCart(_cart_item ){
 
-this.cart+=1
- }
+const requestOptions = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ userId: "1",productId: "2", price:"1600.5",quantity:"1"})
+  };
+  fetch("http://127.0.0.1:9000/carts", requestOptions)
+    .then(response => response.json())
+    .then(data => (_cart_item = data.id));
+}
+
+ 
 
 
     </script>
     
     <template>
       <header>
-      <div class = "cart" >cart   {{cart}} </div>
+      <div class = "cart" > cart{{cart_item}} </div>
       </header>
   
     <section>
@@ -84,8 +93,9 @@ this.cart+=1
            <h3>Price : ₹{{product.product_rate}}</h3>
         
          
-        <button class ="button" v-on:click="addtoCart"> Add to cart </button>
+        <button class ="button" @click="addtoCart({ product_id: product.id})"> Add to cart </button>
         <button class ="button2"> Wishlist </button>
+
     </div>
     </div>
 

@@ -20,7 +20,7 @@ class ProductListResource(Resource):
             product_name=request.json['product_name'],
             product_rate=request.json['product_rate'],
             quantity=request.json['quantity'],
-            image = request.json
+            image = request.json['image']
 
         )
         db.session.add(new_product)
