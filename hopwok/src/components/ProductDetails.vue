@@ -191,7 +191,7 @@ body{
   transition: 0.5s;
 }
 
-.container .card:hover .imgBx{
+.container .card:hove{
   top: 0%;
   transform: translateY(0%);
     
