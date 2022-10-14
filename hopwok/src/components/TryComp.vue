@@ -1,6 +1,7 @@
 <script  setup>
 import {ref, onMounted } from 'vue';
-const props = defineProps({
+
+    defineProps({
       msg :{
         type: String,
         required: true
@@ -32,8 +33,7 @@ const props = defineProps({
      
 
     })
-
-    const products = ref([""])
+    const products = ref([])
 async function api(url) {
   const response = await fetch(url);
 if (!response.ok) {
@@ -72,12 +72,9 @@ onMounted(() => getproduct())
             <router-link  :to ="{ path: `/product/${product.id}` }"> View details </router-link>
             <div class="price">
            <h3>Price : ₹{{product.product_rate}}</h3>
-        
-         
-
          </div>
-         <a class ="a" href="http://127.0.0.1:5173/">Buy Now</a>
-        <a class ="a" href="#">Add to cart</a>
+         <button class ="button" v-on:click="addtoCart"> Add to cart </button>
+      
     </div>
     </div>
 
@@ -295,17 +292,7 @@ body{
   cursor: pointer;
 }
 
-.container .card .contentBx .color span:nth-child(2){
-  background: #9bdc28;
-}
 
-.container .card .contentBx .color span:nth-child(3){
-  background: #03a9f4;
-}
-
-.container .card .contentBx .color span:nth-child(4){
-  background: #e91e63;
-}
 
 .container .card .contentBx .a{
   display: inline-block;
@@ -337,6 +324,39 @@ a{
   transform: translateY(0px);
   transition-delay: 0.75s;
   
+}
+.button{
+  position: relative;
+  display: inline-block;
+  padding: 10px 20px;
+  background: #23730f;
+  font-weight: 300;
+  font-size: 14px;
+
+  letter-spacing: 2px;
+  margin-right: 10px;
+  top: -5px;
+  font-weight: 600;
+  color: #111;
+  border-radius: 8px;
+
+  
+
+}
+.button2{
+  position: relative;
+  display: inline-block;
+  padding: 10px 20px;
+  background: #981515;
+  margin-left: 10px;
+  left:250px;
+  top:200px;
+  font-weight: 600;
+  color: #111;
+  border-radius: 8px;
+
+  
+
 }
 
 </style>

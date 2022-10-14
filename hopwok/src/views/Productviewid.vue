@@ -1,10 +1,11 @@
 <script setup>
 import ProductDetails from '@/components/ProductDetails.vue';
-import TryComp from '../components/TryComp.vue';
 </script>
 <template>
     <div >
+
       <ProductDetails  :id = "parseInt($route.params.id)" />     
+
     </div>
   </template>
 <style>

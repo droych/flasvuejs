@@ -22,9 +22,10 @@ const props =  defineProps({
         type:String
       },
   
-        id:{
+      id:{
             type:Number
-        },
+        
+      },
         cart:{
           type : Number,
         
@@ -33,9 +34,8 @@ const props =  defineProps({
         }
      
     })
-   
-const product  = ref({})
-let cart = 0
+const product = ref({})
+  
 async function api(url) {
   const response = await fetch(url);
 if (!response.ok) {
@@ -46,7 +46,11 @@ return await response.json();
 function getproduct() {
  
 api(`http://127.0.0.1:5000/product/${props.id}`)
+
+
    .then((data) => {product.value = data})
+   
+   
     .catch(error => {console.log(error.toString())
   }
 )  
