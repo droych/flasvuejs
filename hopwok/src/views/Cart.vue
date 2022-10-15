@@ -3,7 +3,7 @@ import TryComp from '@/components/TryComp.vue';
 </script>
 <template>
     <div > 
-     <ProductDetails  :id = "parseInt($route.params.id)" , quantity = 2 />    
+     <ProductDetails  :id = "parseInt($route.params.id)"  />    
     </div>
 </template>
   
