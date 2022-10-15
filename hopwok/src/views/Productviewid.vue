@@ -17,9 +17,6 @@ import ProductDetails from '@/components/ProductDetails.vue';
       display: flex;
       align-items: center;
     }
-    
-
-   
   }
 </style>
   
