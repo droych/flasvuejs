@@ -1,10 +1,11 @@
 <script setup>
 import TryComp from '@/components/TryComp.vue';
-import Loginview from '../components/Loginview.vue';
+import SignUpComp from '../components/SignUpComp.vue';
 </script>
 <template>
     <div > 
-   <Loginview />
+     welcome to signup page this one is also under construction
+     <SignUpComp  />
     </div>
 </template>
   

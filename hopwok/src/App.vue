@@ -1,7 +1,16 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
+import {ref, onMounted } from 'vue';
 
 import HelloWorld from './components/HelloWorld.vue'
+function toLogin(producturl)
+{
+       window.location.href = producturl
+            }
+function tosignup(producturl)
+{
+       window.location.href = producturl
+            }
 
 </script>
 <template>
@@ -16,6 +25,8 @@ import HelloWorld from './components/HelloWorld.vue'
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
         <RouterLink to="/products">Products</RouterLink>
+        <button class ="button" @click='toLogin(`http://127.0.0.1:5173/login`)'>login </button>
+        <button class ="button2" @click='tosignup(`http://127.0.0.1:5173/signup`)'> sign up </button>
       </nav>
     </div>
     </div>
@@ -86,7 +97,35 @@ header {
   nav a:first-of-type {
     border: 0;
   }
+  .button{
+  position: relative;
+  display: inline-block;
+  padding: 10px 20px;
+  background: #23730f;
+  left:1050px;
+
+  font-weight: 600;
+  color: rgb(255, 255, 255);
+  border-radius: 8px;
+
   
+
+}
+.button2{
+  position: relative;
+  display: inline-block;
+  padding: 10px 20px;
+  background: #13abd5;
+  margin-left: 10px;
+  left:860px;
+  font-weight: 600;
+  color: rgb(255, 254, 254);
+  border-radius: 8px;
+
+  
+
+}
+
   @media (min-width: 1024px) {
     header {
       

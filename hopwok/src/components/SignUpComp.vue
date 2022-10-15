@@ -1,119 +1,111 @@
-<script setup>
-import {ref } from 'vue';
-import {onMounted, onRenderTriggered } from 'vue';
-const props =  defineProps({
-      msg :{
+<script  setup>
+import {ref, onMounted } from 'vue';
+const props = defineProps({
+        username :{
         type: String,
-        required: true
-
-      },
-      image: {
+       
+     },
+      email: {
         type: String,
-        
-
       },
-      Instock:{
-        type: Boolean
-        
-        
-      },
-
-      image :{
+      phone_number:
+        {
+            type:Number
+        },
+      user_address :{
         type:String
       },
-  
-      id:{
-            type:Number
-        
-      },
-      cart_item :{
-          type : Object,
-        
-      
-
-        },
-        
-
-    })
-const product = ref({})
-  
-async function api(url) {
-  const response = await fetch(url);
-if (!response.ok) {
-throw new Error(response.statusText);
-}
-return await response.json();
-}
-function getproduct() {
-
-api(`http://127.0.0.1:9000/product/${props.id}`)
-   .then((data) => {product.value = data})
-   .catch(error => {console.log(error.toString())
-
-  }
-)  
-}
-onMounted(() => getproduct())
-
-function addtoCart(_cart_item ){
+      password:
+        {
+            type:String
+        }
+    }) 
+function signup(){
 const requestOptions = {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({})
+    body: JSON.stringify({ username: `${props.username}`,email: `${props.email}`, phone_number:`${props.phone_number}`,user_address:`${props.user_address}`,password:`${props.password}`})
   };
-  fetch("http://127.0.0.1:9000/carts", requestOptions)
+  
+  fetch("http://127.0.0.1:9000/signup", requestOptions)
     .then(response => response.json())
-    .then(data => (_cart_item = data.id));
+    .then(data => console.log(data));
 }
 
     </script>
     
+    <template>
+     
+    <section>
+      <main>
+      <div class="card-wrapper">
+        <div class="container" >
+        
+    
+            <div class="card">
+            <form @submit.prevent="signup" >
+            
+            <div class="form-group">
+                <h3>Sign In</h3>
+                <div >
+                <label>username</label>
+                <input type="text" class="form-control form-control-lg" v-model="username"/>
+                 </div>
+ 
+                <div >
+                <label>Email</label>
+                <input type="email" class="form-control form-control-lg"  v-model="email" />
+                </div>
+            
+                <div>
+                <label>Phone number</label>
+                <input type="tel" class="form-control form-control-lg"  v-model="phone_number"/>
+                </div>
+                <div>
+                <label>Address</label>
+                <input type="tel" class="form-control form-control-lg"  v-model="user_address"/>
+                </div>
+                <div>
+                <label>Password</label>
+                <input type="password" class="form-control form-control-lg"  v-model="password"/>
+                </div>       
+                <button  type="submit"  class ="button" v-on:click="signup" > sign up </button> 
+            </div>        
+          </form>
+        </div>
+      </div>
+    </div>
+
+    </main>
     
 
 
 
 
-    <template>
-      <header>
-
-      <div class = "cart" > cart{{cart_item}} </div>
-
-      </header>
-  
-    <section>
-      <main>
-      <div class = "fetch" >
-        <div class="container"> 
-          <div class="card">
-          <div class="imgBx">
-        
-            <img v-bind:src = "product.image" >
-          </div>
-        
-           <h2>{{product.product_name}}</h2>
-           <h3>Price : ₹{{product.product_rate}}</h3>
-        
-         
-
-        <button class ="button" @click="addtoCart({ product_id: product.id})"> Add to cart </button>
-        <button class ="button2"> Wishlist </button>
 
 
-    </div>
-    </div>
-
-</div> 
-
-
-  </main>
   </section>
-      
-  </template>
+    
+
+        
+
+    </template>
     
     
     <style scoped>
     
-
+    .card-wrapper {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 1.5rem;
+  
+    width: 120ch;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
 body{
   display: flex;
   justify-content: center;
@@ -128,15 +120,14 @@ body{
   display: flex;
 
  
-  margin: 0.2em;
-  padding: 0;
+  margin-right: -20px;
+  padding: 2px;
   list-style-type: none;
 
 }
 .card {
 
-  width: 1000px;
-  
+
   gap: 2rem;
   padding: 0;
   list-style-type: none;
@@ -144,7 +135,7 @@ body{
 .container .card{
   position: relative;
   width: 1020px;
-  height: 420px;
+  height: 550px;
   background: rgba(136, 105, 129, 0.39);
   border-radius: 20px;
   overflow: hidden;
@@ -152,7 +143,9 @@ body{
   left: -35px;
   flex-direction: row;
 
-  list-style-type: none;  
+  list-style-type: none;
+  
+  
 }
 
 .container .card:before{
@@ -181,28 +174,18 @@ body{
   font-style: italic;
   color: rgba(101, 101, 100, 0.05)
 }
-.imgBx{
-  position: absolute;
-  top: 50%;
-  left: -600px;
-  transform: translateY(-50%);
-  z-index: 1;
-  width: 90%;
-
-  transition: 0.5s;
-}
 
 .container .card .imgBx{
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
   z-index: 10000;
-  width: 70%;
+  width: 50%;
   height: 120px;
   transition: 0.5s;
 }
 
-.container .card:hove{
+.container .card:hover .imgBx{
   top: 0%;
   transform: translateY(0%);
     
@@ -222,46 +205,20 @@ body{
   width: 100%;
   height: 100px;
   text-align: center;
- 
+  transition: 1s;
+  z-index: 10;
 }
 .fetch {
     list-style: none;
     padding: 0;
     margin: 0;
-    width:1200px;
+    width:400px;
 
   
   
   }
 .container .card:hover .contentBx{
   height: 210px;
-}
-h2{
-  position: relative;
-  font-weight: 600;
-  letter-spacing: 1px;
-  color: #000;
-  margin: 0;
-  left:250px;
-  top:80px;
-  
-
-}
-h3{
-  position: relative;
- 
-  letter-spacing: 1px;
-  color: #000;
-  margin: 0;
-  left:250px;
-  top:80px;
-  color: rgb(0, 0, 0);
-  font-weight: 300;
-  font-size: 14px;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  margin-right: 10px;
-
 }
 
 .container .card .contentBx h2{
@@ -307,7 +264,7 @@ h3{
 
 .container .card .contentBx .price span{
   width: 26px;
-  height: 100px;
+  height: 26px;
   text-align: center;
   line-height: 26px;
   font-size: 14px;
@@ -328,7 +285,7 @@ h3{
 
 .container .card .contentBx .color span{
   width: 20px;
-  height: 100px;
+  height: 20px;
   background: #ff0;
   border-radius: 50%;
   margin: 0 5px;
@@ -336,35 +293,6 @@ h3{
 }
 
 
-.button{
-  position: relative;
-  display: inline-block;
-  padding: 10px 20px;
-  background: #23730f;
-  left:250px;
-  top:200px;
-  font-weight: 600;
-  color: #111;
-  border-radius: 8px;
-
-  
-
-}
-.button2{
-  position: relative;
-  display: inline-block;
-  padding: 10px 20px;
-  background: #981515;
-  margin-left: 10px;
-  left:250px;
-  top:200px;
-  font-weight: 600;
-  color: #111;
-  border-radius: 8px;
-
-  
-
-}
 
 .container .card .contentBx .a{
   display: inline-block;
@@ -391,15 +319,64 @@ a{
   margin-right: 10px;
   top: -5px;
 }
-.container .card:hover {
+.container .card:hover .contentBx .a{
   opacity: 1;
   transform: translateY(0px);
   transition-delay: 0.75s;
   
 }
+.button{
+  position: relative;
+  display: inline-block;
+  padding: 10px 20px;
+  background: #23730f;
+  font-weight: 300;
+  font-size: 14px;
 
-   
-    </style>
-    
+  letter-spacing: 2px;
+  margin-right: 10px;
+  top: -5px;
+  font-weight: 600;
+  color: #111;
+  border-radius: 8px;
 
-    
+  
+
+}
+.button2{
+  position: relative;
+  display: inline-block;
+  padding: 10px 20px;
+  background: #981515;
+  margin-left: 10px;
+  left:250px;
+  top:200px;
+  font-weight: 600;
+  color: #111;
+  border-radius: 8px;
+
+  
+
+}
+.form-group {
+  overflow: hidden;
+  background-color: rgb(237, 227, 227);
+  padding: 20px 25px 30px 20px;
+  border-radius: 10px;
+  position: relative;
+  top: 10%;
+  left: 20%;
+  width: 400px;
+  height :420;
+  margin :4px;
+
+  
+
+}
+
+
+
+</style>
+
+
+

@@ -43,7 +43,24 @@ const router = createRouter({
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/Cart.vue'),
       props:true
-    }
+    },
+    {
+      path: '/login',
+      name: 'login',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/Login.vue'),
+      props:true
+    },
+    {
+      path: '/signup',
+      name: 'signup',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/SignUp.vue')
+    },
   ]
 })
 

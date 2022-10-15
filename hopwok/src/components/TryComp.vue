@@ -33,7 +33,7 @@ import {ref, onMounted } from 'vue';
      
 
     })
-    const products = ref([])
+const products = ref([])
 async function api(url) {
   const response = await fetch(url);
 if (!response.ok) {
