@@ -1,0 +1,11 @@
+localhost {
+	handle {
+		reverse_proxy localhost:5173
+	}
+	handle /api/* {
+		root * C:/Users/Rheea/newvue
+		reverse_proxy localhost:9000
+	}
+}
+
+

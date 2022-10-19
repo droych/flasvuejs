@@ -3,7 +3,7 @@
     Name : "sohn",
     
     rate     : 50,
-    quantiyu  : 20
+    quantiy  : 20
   };
   
 
