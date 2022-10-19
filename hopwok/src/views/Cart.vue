@@ -1,12 +1,13 @@
 <script setup>
 import TryComp from '@/components/TryComp.vue';
+import Addtocart from '../components/Addtocart.vue';
 </script>
 <template>
     <div > 
-     
+     <Addtocart />
     </div>
 </template>
-  
+
   
 <style>
 

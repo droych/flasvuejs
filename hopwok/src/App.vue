@@ -8,6 +8,7 @@ const router = useRouter()
 
 </script>
 <template>
+  <div>
   <header>
    
 
@@ -19,24 +20,20 @@ const router = useRouter()
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
         <RouterLink to="/products">Products</RouterLink>
+        <RouterLink to="/cart">cart</RouterLink>
         <button class ="button" @click='$router.push({name: "login"})'>login </button>
         <button class ="button2" @click='$router.push({name: "signup"})'> sign up </button>
 
       </nav>
     </div>
     </div>
-
-
-    
-      
-
 </header>
 
  
 
 <RouterView/>
 
-
+</div>
 </template>
   
   
@@ -97,8 +94,8 @@ header {
   display: inline-block;
   padding: 10px 20px;
   background: #23730f;
-  left:1050px;
-
+  left:760px;
+  top:-70px;
   font-weight: 600;
   color: rgb(255, 255, 255);
   border-radius: 8px;
@@ -112,7 +109,8 @@ header {
   padding: 10px 20px;
   background: #13abd5;
   margin-left: 10px;
-  left:860px;
+  left:760px;
+  top:-70px;
   font-weight: 600;
   color: rgb(255, 254, 254);
   border-radius: 8px;

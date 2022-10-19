@@ -50,7 +50,7 @@ api(`/api/product/${props.id}`)
 )  
 }
 onMounted(() => getproduct())
-const counts = ref(0)
+const counts = ref(1)
 function inc()
 {
   counts.value =  counts.value+ 1;
@@ -66,7 +66,7 @@ function dec()
 }
 
 const cart_counts = ref(1)
-function Cart(cart_item ){
+function Cart(cart_item){
 
 
 async function api(url,options) {
@@ -88,14 +88,12 @@ const requestOptions = {
     .then(data => (cart_item = data.id))
     .catch((error) => {console.log(error.toString())})
     
-   cart_counts.value =  cart_counts.value + 1;
-    console.log(cart_counts.value)
-    return cart_counts.value = cart_counts.value;
 }
 
 </script>
     
 <template>
+  <div>
       <header>
 
       <div> cart{{cart_counts}}</div>
@@ -108,7 +106,6 @@ const requestOptions = {
         <div class="container"> 
           <div class="card">
           <div class="imgBx">
- 
             <img v-bind:src = "product.image" >
           </div>
            <h2>{{product.product_name}}</h2>
@@ -121,7 +118,7 @@ const requestOptions = {
                 <input type = "text" v-model="counts" />
                 
                 <button class="minus-btn"  v-on:click.prevent="dec">
-                <img class ="quantity-imagem" src="/public/minus-3.png" alt="" />
+                <img class ="quantity-imagem" src="/public/minus-3.png" alt="-" />
                 </button>
            </div>
         <button type  = "submit" class ="button" v-on:click = "Cart({ product_id: product.id, quantity:counts})" > Add to cart </button>
@@ -137,7 +134,7 @@ const requestOptions = {
 
   </main>
   </section>
-      
+</div>      
   </template>
     
     
