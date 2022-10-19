@@ -11,7 +11,9 @@ app.config["JWT_COOKIE_SECURE"] = False
 app.config["JWT_SECRET_KEY"] = "idkwthmid"
 JWT_ACCESS_TOKEN_EXPIRES = timedelta(minutes=30)
 JWT_REFRESH_TOKEN_EXPIRES = timedelta(minutes=30)
-
+app.config['JWT_TOKEN_LOCATION'] = ['cookies']
+app.config['JWT_ACCESS_COOKIE_PATH'] = '/api/'
+app.config['JWT_COOKIE_CSRF_PROTECT'] = True
 
 def generate_login_token(user_name):
     access_token = create_access_token(identity=user_name)
@@ -21,7 +23,9 @@ def generate_login_token(user_name):
         'refresh_token': refresh_token
 
     }
+
     return response
+
 
 def unset_login():
     response = jsonify({"msg": "logout successful"})

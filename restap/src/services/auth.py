@@ -1,15 +1,19 @@
+from datetime import timedelta
 from http import HTTPStatus
 
-from flask_jwt_extended import jwt_required, get_jwt_identity
+from flask_jwt_extended import jwt_required, get_jwt_identity, set_access_cookies, create_access_token
+
+from src.common.base import app
 from src.db.model import User
 from src.schemas.user import users_schema,user_schema
 from flask_restful import Resource,request
 from src.db.model import db, User
-from flask import make_response, jsonify
+from flask import jsonify
 
 from src.decor.admindec import admin_required
 from src.utils.bcrpt import encrypt_password,compare_passwords
 from src.utils.jwttoken import generate_login_token, unset_login, refresh
+
 
 
 class SignupResource(Resource):
@@ -31,13 +35,25 @@ class SignupResource(Resource):
 class LoginResource(Resource):
     try:
         def post(self):
-
             password = request.json['password']
             users = User.query.filter_by(email=request.json['email']).first()
-            if users and compare_passwords(password,users.password):
-                        return generate_login_token(users.email), HTTPStatus.OK
-            else:
+            if not users:
                           return  HTTPStatus.BAD_REQUEST
+            elif compare_passwords(password,users.password):
+                        response =  generate_login_token(users.email)
+                        resp = jsonify({'acess token': list(response.values())[0]})
+                        #    print(list(token.values())[0])
+                        set_access_cookies(resp, list(response.values())[0])
+                        print(set_access_cookies(resp, list(response.values())[0]))
+                        print(resp)
+                        cookie_token = create_access_token(identity=users.email, expires_delta=timedelta(days=300))
+                        print(vars(resp))
+                        set_access_cookies(resp, cookie_token)
+
+                        return resp
+            
+            else:
+                return HTTPStatus.CONFLICT
     except Exception as e:
         print(e)
 

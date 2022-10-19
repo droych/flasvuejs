@@ -1,36 +1,38 @@
 <script  setup>
 import {ref, onMounted } from 'vue';
+import LoginVue from '../views/Login.vue';
 const props = defineProps({
-        username :{
-        type: String,
-       
-     },
-      email: {
+       email: {
         type: String,
       },
-      phone_number:
-        {
-            type:Number
-        },
-      user_address :{
-        type:String
-      },
+  
       password:
         {
             type:String
         }
     }) 
+function getCookie(name) {
+  const cookie = `; ${document.cookie}`;
+  const parts = cookie.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(';').shift();
+}
+
 function login(){
+
+  
 const requestOptions = {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email: `${props.email}`,password:`${props.password}`})
+    headers: { 
+    'Content-Type': 'application/json' ,
+    'X-CSRF-TOKEN': getCookie('csrf_access_token')},
+     body: JSON.stringify({ email: `${props.email}`,password:`${props.password}`})
   };
   
-  fetch("http://127.0.0.1:9000/login", requestOptions)
+  fetch('api/login', requestOptions)
     .then(response => response.json())
-    .then(data => console.log(data));
+    .then(data => console.log(data))
 }
+
 
     </script>
     
@@ -43,7 +45,7 @@ const requestOptions = {
         
     
             <div class="card">
-            <form @submit.prevent="signup" >
+            <form @submit.prevent="login" >
             
             <div class="form-group">
                 <h3>Login In</h3>
@@ -59,7 +61,7 @@ const requestOptions = {
                 <label>Password</label>
                 <input type="password" class="form-control form-control-lg"  v-model="password"/>
                 </div>       
-                <button  type="submit"  class ="button" v-on:click="login" > sign up </button> 
+                <button  type="submit"  class ="button" > Login </button> 
             </div>        
           </form>
         </div>

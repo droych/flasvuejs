@@ -1,16 +1,10 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterLink, RouterView,useRouter } from 'vue-router'
 import {ref, onMounted } from 'vue';
 
 import HelloWorld from './components/HelloWorld.vue'
-function toLogin(producturl)
-{
-       window.location.href = producturl
-            }
-function tosignup(producturl)
-{
-       window.location.href = producturl
-            }
+const router = useRouter()
+
 
 </script>
 <template>
@@ -25,8 +19,9 @@ function tosignup(producturl)
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
         <RouterLink to="/products">Products</RouterLink>
-        <button class ="button" @click='toLogin(`http://127.0.0.1:5173/login`)'>login </button>
-        <button class ="button2" @click='tosignup(`http://127.0.0.1:5173/signup`)'> sign up </button>
+        <button class ="button" @click='$router.push({name: "login"})'>login </button>
+        <button class ="button2" @click='$router.push({name: "signup"})'> sign up </button>
+
       </nav>
     </div>
     </div>

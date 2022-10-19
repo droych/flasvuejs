@@ -27,7 +27,7 @@ const requestOptions = {
     body: JSON.stringify({ username: `${props.username}`,email: `${props.email}`, phone_number:`${props.phone_number}`,user_address:`${props.user_address}`,password:`${props.password}`})
   };
   
-  fetch("http://127.0.0.1:9000/signup", requestOptions)
+  fetch("api/signup", requestOptions)
     .then(response => response.json())
     .then(data => console.log(data));
 }

@@ -18,25 +18,21 @@ const props =  defineProps({
         
       },
 
-      image :{
-        type:String
-      },
-  
       id:{
-            type:Number
-        
+            type:Number     
       },
       cart_item :{
           type : Object,
-        
-      
-
         },
+        quantity:
+        {
+          type:Number,
+        
+        }
         
 
     })
 const product = ref({})
-  
 async function api(url) {
   const response = await fetch(url);
 if (!response.ok) {
@@ -46,7 +42,7 @@ return await response.json();
 }
 function getproduct() {
 
-api(`http://127.0.0.1:9000/product/${props.id}`)
+api(`/api/product/${props.id}`)
    .then((data) => {product.value = data})
    .catch(error => {console.log(error.toString())
 
@@ -54,29 +50,55 @@ api(`http://127.0.0.1:9000/product/${props.id}`)
 )  
 }
 onMounted(() => getproduct())
+const counts = ref(0)
+function inc()
+{
+  counts.value =  counts.value+ 1;
 
-function addtoCart(_cart_item ){
-const requestOptions = {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({})
-  };
-  fetch("http://127.0.0.1:9000/carts", requestOptions)
-    .then(response => response.json())
-    .then(data => (_cart_item = data.id));
+    return counts.value = counts.value;
+    }
+function dec()
+{
+      if (counts.value > 1) { 
+        counts.value =  counts.value - 1;
+        return counts.value = counts.value;
+      }
 }
 
-    </script>
+const cart_counts = ref(1)
+function Cart(cart_item ){
+
+
+async function api(url,options) {
+  const response = await fetch(url,options);
+if (!response.ok) {
+throw new Error(response.statusText);
+}
+return await response.json();
+}
+
+const requestOptions = {
+    method: 'POST',
+    credentials: 'same-origin',
+    headers: {"Content-Type": "application/json" },
+     body: JSON.stringify(cart_item)
+  };
+  api('/api/carts', requestOptions)
+    .then(response => response.json())
+    .then(data => (cart_item = data.id))
+    .catch((error) => {console.log(error.toString())})
     
+   cart_counts.value =  cart_counts.value + 1;
+    console.log(cart_counts.value)
+    return cart_counts.value = cart_counts.value;
+}
+
+</script>
     
-
-
-
-
-    <template>
+<template>
       <header>
 
-      <div class = "cart" > cart{{cart_item}} </div>
+      <div> cart{{cart_counts}}</div>
 
       </header>
   
@@ -86,16 +108,23 @@ const requestOptions = {
         <div class="container"> 
           <div class="card">
           <div class="imgBx">
-        
+ 
             <img v-bind:src = "product.image" >
           </div>
-        
            <h2>{{product.product_name}}</h2>
            <h3>Price : ₹{{product.product_rate}}</h3>
-        
-         
-
-        <button class ="button" @click="addtoCart({ product_id: product.id})"> Add to cart </button>
+           <div class="quantity">
+                <button class="plus-btn"   v-on:click.prevent="inc">
+                <img class ="quantity-imagep" src="/public/plus.png" alt="+" />
+                </button>
+                
+                <input type = "text" v-model="counts" />
+                
+                <button class="minus-btn"  v-on:click.prevent="dec">
+                <img class ="quantity-imagem" src="/public/minus-3.png" alt="" />
+                </button>
+           </div>
+        <button type  = "submit" class ="button" v-on:click = "Cart({ product_id: product.id, quantity:counts})" > Add to cart </button>
         <button class ="button2"> Wishlist </button>
 
 
@@ -103,6 +132,7 @@ const requestOptions = {
     </div>
 
 </div> 
+
 
 
   </main>
@@ -126,8 +156,8 @@ body{
 .container{
   position: relative;
   display: flex;
-
- 
+  top:30px;
+  left:200px;
   margin: 0.2em;
   padding: 0;
   list-style-type: none;
@@ -398,7 +428,41 @@ a{
   
 }
 
-   
+.quantity {
+  position:relative;
+  top:180px;
+  left:250px;
+
+}
+.quantity input {
+  -webkit-appearance: none;
+  border: none;
+  text-align: center;
+  width: 32px;
+  font-size: 16px;
+  color: #43484D;
+  font-weight: 300;
+}
+ 
+button[class*=btn] {
+  width: 30px;
+  height: 30px;
+  background-color: #E1E8EE;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+button:focus,
+input:focus {
+  outline:0;
+}
+.quantity-imagep{
+  width:50%;
+}
+.quantity-imagem{
+  width:70%;
+} 
     </style>
     
 

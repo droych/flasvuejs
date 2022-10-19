@@ -42,7 +42,7 @@ throw new Error(response.statusText);
 return await response.json();
 }
 function getproduct() {
-api('http://127.0.0.1:9000/products')
+api('api/products')
 
     
     .then((data) => {products.value = data})
@@ -94,14 +94,15 @@ onMounted(() => getproduct())
     <style scoped>
     
     .card-wrapper {
+    position: relative;
     list-style: none;
     padding: 0;
     margin: 0;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 1.5rem;
-    max-width: 100vw;
-    width: 120ch;
+    left:140px;
+    width: 1120px;
     padding-left: 1rem;
     padding-right: 1rem;
   }
@@ -141,7 +142,7 @@ body{
   margin: 2em;
   left: -35px;
   flex-direction: row;
-
+ 
   list-style-type: none;
   
   
@@ -282,7 +283,7 @@ body{
   background: #9bdc28;
 }
 
-.container .card .contentBx .color span{
+.container .card .contentBx .color span .button{
   width: 20px;
   height: 20px;
   background: #ff0;
@@ -293,7 +294,7 @@ body{
 
 
 
-.container .card .contentBx .a{
+.container .card .contentBx .a .button{
   display: inline-block;
   padding: 10px 20px;
   background: #23730f;
@@ -318,7 +319,7 @@ a{
   margin-right: 10px;
   top: -5px;
 }
-.container .card:hover .contentBx .a{
+.container .card:hover .contentBx .a .button{
   opacity: 1;
   transform: translateY(0px);
   transition-delay: 0.75s;
@@ -334,7 +335,7 @@ a{
 
   letter-spacing: 2px;
   margin-right: 10px;
-  top: -5px;
+  top: 8px;
   font-weight: 600;
   color: #111;
   border-radius: 8px;
@@ -342,21 +343,7 @@ a{
   
 
 }
-.button2{
-  position: relative;
-  display: inline-block;
-  padding: 10px 20px;
-  background: #981515;
-  margin-left: 10px;
-  left:250px;
-  top:200px;
-  font-weight: 600;
-  color: #111;
-  border-radius: 8px;
 
-  
-
-}
 
 </style>
 
