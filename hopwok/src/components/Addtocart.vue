@@ -26,13 +26,13 @@ const props = defineProps({
 
 });
 const counts = ref(1)
-function increment(c)
+function increment()
 {
   counts.value =  counts.value + 1;
 
     return counts.value = counts.value;
     }
-function decrement(c)
+function decrement()
 {
       if (counts.value > 1) { 
         counts.value =  counts.value - 1;
@@ -86,12 +86,35 @@ return await response.json();
     .catch((error) => {console.log(error.toString())})
     
 }
+function patchcart(cart_item){
+  const requestOptions = {
+    method: 'PATCH',
+    credentials: 'same-origin',
+    headers: {"Content-Type": "application/json" },
+     body: JSON.stringify(cart_item)
+  };
+let url = `/api/cart/${cart_item}`
+console.log(cart_item)
+async function api(url,requestOptions) {
+const response = await fetch(url,requestOptions);
+if (!response.ok) {
+throw new Error(response.statusText);
+}
+return await response.json();
+}
 
+
+  api(url, requestOptions)
+    
+    .then(data => (cart_item = data.id))
+    .catch((error) => {console.log(error.toString())})
+    
+}
 </script>
 
 <template>
 <div>
-<header><div>cart{{ cart_counts }}</div></header>
+<header><div><img class ="cart" src =  "/public/shopp.png"  alt="-" /></div></header>
   <section>
     <main>
         <div class="fetch">
@@ -104,12 +127,16 @@ return await response.json();
                     <p>{{ c.product_name }}</p>
                     <p>quantity:   {{ c.quantity }}</p>
                     <p>price:      {{ c.product_rate }}</p> 
-                    <button class="plus-btn"   v-on:click.prevent="increment(c)"> + </button>
-                    <input type = "text" v-model="c.quantity" />
-                    <button class="minus-btn"  v-on:click.prevent="decrement(c)"> - </button>
+                    <button class="plus-btn"   v-on:click.prevent="increment()"> <b> + </b></button>
+                    <input type = "text" v-model="counts" />
+                    <button class="minus-btn"  v-on:click.prevent="decrement()"> <b> - </b> </button>
                     <button class="bin"  @click = " deletecart(c.productId) " >
                       <img class ="dust" src="/public/bin.png" alt="-" />
-                    </button>   
+                    </button> 
+                    <button class="rot"  @click = " patchcart({productId : c.productId , quantity: counts}) " >
+                      <img class ="update" src="/public/rotate.png" alt="-" />
+                    </button> 
+                      
                 </div>
                 </div>
               </li>
@@ -435,13 +462,28 @@ input:focus {
 .quantity .bin{
 position:relative;
 left: 15px;
-top:5px;
-width:35px;
+top:2px;
+width:30px;
+height: 30px;
 } 
 .quantity .dust{
 
 
 width:70%;
 height:60%;
+} 
+.quantity .rot{
+position:relative;
+left: 15px;
+top:3px;
+width:30px;
+height: 30px;
+margin: 2px;
+} 
+.quantity .update{
+width:90%;
+} 
+.cart{
+width:5%;
 } 
 </style>
