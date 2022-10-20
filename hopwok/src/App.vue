@@ -23,6 +23,7 @@ const router = useRouter()
         <RouterLink to="/cart">cart</RouterLink>
         <button class ="button" @click='$router.push({name: "login"})'>login </button>
         <button class ="button2" @click='$router.push({name: "signup"})'> sign up </button>
+        <button class ="button3" @click='$router.push({name: "logout"})'> logout </button>
 
       </nav>
     </div>
@@ -118,7 +119,21 @@ header {
   
 
 }
+.button3{
+  position: relative;
+  display: inline-block;
+  padding: 10px 20px;
+  background: #d54713;
+  margin-left: 10px;
+  left:760px;
+  top:-70px;
+  font-weight: 600;
+  color: rgb(255, 254, 254);
+  border-radius: 8px;
 
+  
+
+}
   @media (min-width: 1024px) {
     header {
       

@@ -114,7 +114,7 @@ return await response.json();
 
 <template>
 <div>
-<header><div><img class ="cart" src =  "/public/shopp.png"  alt="-" /></div></header>
+<header><div class = "cc"><img class ="cart" src =  "/public/shopp.png"  alt="-" /><p class = "cartcount">{{carts.count}}</p> </div></header>
   <section>
     <main>
         <div class="fetch">
@@ -483,7 +483,32 @@ margin: 2px;
 .quantity .update{
 width:90%;
 } 
+.cc{
+  position: relative;
+  left:1240px;
+  top:-60px;
+}
 .cart{
-width:5%;
+  position: relative;
+  left:10px;
+  width:3%;
+  transform: rotate(-0.0turn);
+  
+
 } 
+.cartcount{
+  position: relative;
+  font-family: 'Poppins', sans-serif;
+  border-radius: 50%;
+        width: 20px;
+        height: 20px;
+      
+        background: rgb(230, 206, 20);
+        border: 3px solid rgb(23, 5, 105);
+        color: rgb(159, 78, 78);
+        text-align: center;
+  font-size: 15px;
+  left:40px;
+  top:-75px;
+}
 </style>

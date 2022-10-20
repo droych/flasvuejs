@@ -16,20 +16,23 @@ function getCookie(name) {
   const parts = cookie.split(`; ${name}=`);
   if (parts.length === 2) return parts.pop().split(';').shift();
 }
-function login(){
+const loginhide = ref(false)
+function logout(){
+
   
 const requestOptions = {
     method: "POST",
     headers: { 
     'Content-Type': 'application/json' ,
     'X-CSRF-TOKEN': getCookie('csrf_access_token')},
-     body: JSON.stringify({ email: `${props.email}`,password:`${props.password}`})
   };
   
-  fetch('api/login', requestOptions)
+  fetch('/api/logout', requestOptions)
     .then(response => response.json())
     .then(data => console.log(data))
 }
+
+
     </script>
     
     <template>
@@ -40,29 +43,12 @@ const requestOptions = {
         <div class="container" >
         
     
-            <div class="card">
-            <form @submit.prevent="login" >
+   
+                <button  type="submit"  class ="button"  v-on:click= "logout" > Logout </button> 
             
-            <div class="form-group">
-                <h3>Login In</h3>
-              
- 
-                <div >
-                <label>Email</label>
-                <input type="email" class="form-control form-control-lg"  v-model="email" />
-                </div>
-            
-               
-                <div>
-                <label>Password</label>
-                <input type="password" class="form-control form-control-lg"  v-model="password"/>
-                </div>       
-                <button  type="submit"  class ="button" > Login </button> 
-            </div>        
-          </form>
         </div>
       </div>
-    </div>
+  
 
     </main>
     

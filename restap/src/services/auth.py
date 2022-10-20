@@ -1,26 +1,28 @@
 from datetime import timedelta
 from http import HTTPStatus
 
-from flask_jwt_extended import jwt_required, get_jwt_identity, set_access_cookies, create_access_token
+from flask_jwt_extended import jwt_required, get_jwt_identity, set_access_cookies, create_access_token, \
+    unset_jwt_cookies
 
 from src.common.base import app
 from src.db.model import User
 from src.schemas.user import users_schema,user_schema
 from flask_restful import Resource,request
 from src.db.model import db, User
-from flask import jsonify
+from flask import make_response, jsonify
 
 from src.decor.admindec import admin_required
 from src.utils.bcrpt import encrypt_password,compare_passwords
 from src.utils.jwttoken import generate_login_token, unset_login, refresh
 
-
-
+app.config['JWT_TOKEN_LOCATION'] = ['cookies']
+app.config['JWT_ACCESS_COOKIE_PATH'] = '/api/'
+app.config['JWT_COOKIE_CSRF_PROTECT'] = False
 class SignupResource(Resource):
     def post(self):
         try:
             new_User = User(
-            name = request.json['name'],
+            username = request.json['username'],
             email = request.json['email'],
             phone_number = request.json['phone_number'],
             password = encrypt_password(request.json['password']),
@@ -28,6 +30,7 @@ class SignupResource(Resource):
                 )
             db.session.add(new_User)
             db.session.commit()
+            print(vars(new_User))
             return user_schema.dump(new_User)
 
         except Exception as e:
@@ -51,7 +54,7 @@ class LoginResource(Resource):
                         set_access_cookies(resp, cookie_token)
 
                         return resp
-            
+
             else:
                 return HTTPStatus.CONFLICT
     except Exception as e:
@@ -59,7 +62,9 @@ class LoginResource(Resource):
 
 class LogoutResource(Resource):
     def post(self):
-       return unset_login(), HTTPStatus.OK
+        response = {"msg": "logout successful"}
+        unset_jwt_cookies(jsonify(response))
+        return response, HTTPStatus.OK
 
 
 class Refresh(Resource):

@@ -14,7 +14,9 @@ from src.decor.userdec import user_required
 class CartListResource(Resource):
     @jwt_required()
     def get(self):
-        query = db.select(Cart,Product).join(User).join(Product).filter(User.email == get_jwt_identity())
+        #count = User.query.join(Cart).filter(User.email == get_jwt_identity()).count()
+        #print(get_jwt_identity())
+        query = db.select(Cart, Product).join(User).join(Product).filter(User.email == get_jwt_identity())
         print(query)
         order = db.engine.execute(query)
         print(order)
@@ -30,14 +32,14 @@ class CartListResource(Resource):
     @user_required([0])
     def post(self,**kwargs):
         user = get_jwt_identity()
-        print(user)
+        print("get current user",user)
        # _user_address = request.json['user_address']
         _product_id = request.json['product_id']
         quantity= request.json['quantity']
         purchased = {}
         _cart_total = 0
         _product = Product.query.filter_by(id=_product_id).first()
-        _user = User.query.filter_by(email=user).first()
+        _user = User.query.filter_by(email = get_jwt_identity()).first()
         _user = _user.id
         print(_product.quantity)
         print(quantity)
@@ -57,7 +59,7 @@ class CartListResource(Resource):
         db.session.add(newoders)
         db.session.commit()
         print(newoders)
-        user = User.query.filter_by(email=get_jwt_identity()).first()
+        user = User.query.filter_by(email = get_jwt_identity()).first()
         with db.session.no_autoflush:
 
            user.cartitem.append(newoders)
@@ -65,7 +67,7 @@ class CartListResource(Resource):
            db.session.add(user)
            #db.session.add(pid)
            db.session.commit()
-        response = jsonify("added to cart", {"cart total":_cart_total})
+        response = jsonify("added to cart", {"cart total":_cart_total,"email":get_jwt_identity()})
         return response
 
 
@@ -78,22 +80,13 @@ class CartResource(Resource):
         return cart_schema.dump(order_select)
 
     @jwt_required()
-    @admin_required([1])
-    def put(self, id):
-        order_item = Cart.query.get(id)
-        _quantity = request.json['quantity'] 
-        order_item.quantity = _quantity
-        db.session.add(order_item)
-        db.session.commit()
-        return cart_schema.dump(order_item)
-
     def patch(self, id):
         orders = Cart.query.get_or_404(id)
         orders.quantity = request.json['quantity']
         db.session.commit()
         return cart_schema.dump(Orders)
-    @jwt_required()
 
+    @jwt_required()
     def delete(self, id):
         orders = Cart.query.join(User).filter(User.email == get_jwt_identity(), Cart.productId == id).first()
         db.session.delete(orders)
