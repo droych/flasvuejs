@@ -72,7 +72,7 @@ const requestOptions = {
   apis('/api/carts', requestOptions)
     .then(response => response.json())
     .catch((error) => {console.log(error.toString())})
-    clicked = true;
+  
 }
     </script>
     

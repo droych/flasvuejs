@@ -2,11 +2,16 @@
 import { RouterLink, RouterView,useRouter } from 'vue-router'
 import {ref, onMounted } from 'vue';
 
+import { useProductStore } from "@/stores/productCart"
+import { storeToRefs } from 'pinia';
 import HelloWorld from './components/HelloWorld.vue'
+import AddtocartVue from './components/Addtocart.vue';
 const router = useRouter()
 
-
-</script>
+const product = useProductStore();
+const { carts } = storeToRefs(product); 
+  
+</script> 
 <template>
   <div>
   <header>
@@ -24,9 +29,12 @@ const router = useRouter()
         <button class ="button" @click='$router.push({name: "login"})'>login </button>
         <button class ="button2" @click='$router.push({name: "signup"})'> sign up </button>
         <button class ="button3" @click='$router.push({name: "logout"})'> logout </button>
-
+           
       </nav>
+      <div class = "cc"><img class ="cart" src =  "/public/shopp.png"  alt="-" /><p class = "cartcount">{{carts.count}}</p> </div>
+
     </div>
+
     </div>
 </header>
 
@@ -44,6 +52,9 @@ const router = useRouter()
 
 <style scoped>
  @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+* {
+  box-sizing: border-box;
+}
 
 
 *{
@@ -156,5 +167,36 @@ header {
       margin-top: 1rem;
     }
   }
+  .cc{
+  position: relative;
+  left:1240px;
+  top:-60px;
+  width:90%;
+}
+.cart{
+  position: relative;
+  left:10px;
+  width:3%;
+  transform: rotate(-0.0turn);
+  
+
+} 
+.cartcount{
+  position: relative;
+  font-family: 'Poppins', sans-serif;
+  border-radius: 20%;
+        width: 20px;
+        height: 20px;
+      
+        background: rgb(230, 206, 20);
+        border: 3px solid rgb(23, 5, 105);
+        color: rgb(159, 78, 78);
+        text-align:center;
+        font-weight: 600;
+  font-size: 15px;
+  left:40px;
+  top:-60px;
+}
+
   </style>
   

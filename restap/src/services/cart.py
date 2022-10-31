@@ -75,16 +75,46 @@ class CartListResource(Resource):
 class CartResource(Resource):
     @jwt_required()
     @user_required([0])
-    def get(self, id):
-        order_select =Cart.query.get_or_404(id)
+    def get(self, id,**kwargs):
+        order_select = Cart.query.join(User).filter(User.email == get_jwt_identity(), Cart.productId == id).first()
         return cart_schema.dump(order_select)
 
     @jwt_required()
-    def patch(self, id):
-        orders = Cart.query.get_or_404(id)
+    @user_required([0])
+    def patch(self, id,**kwargs):
+        print('saggie')
+        orders = Cart.query.join(User).filter(User.email == get_jwt_identity(), Cart.productId == id).first()
         orders.quantity = request.json['quantity']
+        print(orders.quantity)
+        _cart_total = 0
+        purchased = {}
+        _product = Product.query.filter_by(id=id).first()
+        print('maggie')
+        _user = User.query.filter_by(email=get_jwt_identity()).first()
+        #cart = Cart.query.filter_by(productId=id, userId=User.id).first()
+        _user = _user.id
+        print(_product.quantity)
+        print(orders.quantity)
         db.session.commit()
-        return cart_schema.dump(Orders)
+        if _product.quantity < orders.quantity:
+            response = jsonify("Sufficient product Count does not exist")
+            return response
+        else:
+            _cart_total += (_product.product_rate * orders.quantity)
+            _product.quantity = _product.quantity - orders.quantity
+            db.session.merge(_product)
+            db.session.commit()
+            purchased.update({id: "updated"})
+            db.session.commit()
+        user = User.query.filter_by(email=get_jwt_identity()).first()
+        with db.session.no_autoflush:
+
+           user.cartitem.append(orders)
+           db.session.add(user)
+           db.session.commit()
+           response = jsonify("added to cart", {"cart total": _cart_total, "email": get_jwt_identity()})
+           return response
+
 
     @jwt_required()
     def delete(self, id):

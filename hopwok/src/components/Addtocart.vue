@@ -1,11 +1,10 @@
 <script setup>
 import { ref } from "vue";
 import { onMounted, onRenderTriggered } from "vue";
+import { useProductStore } from "@/stores/productCart"
+import { storeToRefs } from 'pinia'
 const props = defineProps({
-  msg: {
-    type: String,
-    required: true,
-  },
+  
   image: {
     type: String,
   },
@@ -25,7 +24,8 @@ const props = defineProps({
 
 
 });
-const counts = ref(1)
+const product = useProductStore();
+const counts = ref([])
 function increment()
 {
   counts.value =  counts.value + 1;
@@ -39,98 +39,33 @@ function decrement()
         return counts.value = counts.value;
       }
 }
-const carts = ref([])
-async function api(url,options) {
-  const response = await fetch(url,options);
-  if (!response.ok) {
-    throw new Error(response.statusText);
-  }
-  return await response.json();
-}
-function getcart() {
-const requestOptions = {
-    method: "GET",
-    credentials: "same-origin",
-    headers: { "Content-Type": "application/json" },
-  };
-  api('/api/carts',requestOptions)
-   
-    .then((data) => {carts.value = data})
-    .catch(error => {console.log(error.toString())
-  }
-)  
-}
-onMounted(() => getcart())
-
-function deletecart(cart_item){
-  const requestOptions = {
-    method: 'DELETE',
-    credentials: 'same-origin',
-    headers: {"Content-Type": "application/json" },
-     body: JSON.stringify(cart_item)
-  };
-let url = `/api/cart/${cart_item}`
-console.log(cart_item)
-async function api(url,requestOptions) {
-const response = await fetch(url,requestOptions);
-if (!response.ok) {
-throw new Error(response.statusText);
-}
-return await response.json();
-}
+product.getcart();
 
 
-  api(url, requestOptions)
-    
-    .then(data => (cart_item = data.id))
-    .catch((error) => {console.log(error.toString())})
-    
-}
-function patchcart(cart_item){
-  const requestOptions = {
-    method: 'PATCH',
-    credentials: 'same-origin',
-    headers: {"Content-Type": "application/json" },
-     body: JSON.stringify(cart_item)
-  };
-let url = `/api/cart/${cart_item}`
-console.log(cart_item)
-async function api(url,requestOptions) {
-const response = await fetch(url,requestOptions);
-if (!response.ok) {
-throw new Error(response.statusText);
-}
-return await response.json();
-}
 
 
-  api(url, requestOptions)
-    
-    .then(data => (cart_item = data.id))
-    .catch((error) => {console.log(error.toString())})
-    
-}
 </script>
 
 <template>
 <div>
-<header><div class = "cc"><img class ="cart" src =  "/public/shopp.png"  alt="-" /><p class = "cartcount">{{carts.count}}</p> </div></header>
+<header></header>
   <section>
     <main>
         <div class="fetch">
           <div class="card">
-            <ul v-for="c in carts.items" :key="c.productId">
+            <ul v-for="c in product.carts.items" :key="c.productId">
               <li >
                 <div class = "container">
                   <img v-bind:src = "c.image" />
                   <div class="quantity">
+                
                     <p>{{ c.product_name }}</p>
                     <p>quantity:   {{ c.quantity }}</p>
                     <p>price:      {{ c.product_rate }}</p> 
-                    <button class="plus-btn"   v-on:click.prevent="increment()"> <b> + </b></button>
-                    <input type = "text" v-model="counts" />
-                    <button class="minus-btn"  v-on:click.prevent="decrement()"> <b> - </b> </button>
-                    <button class="bin"  @click = " deletecart(c.productId) " >
+                    <button class="plus-btn" v-on:click.prevent="increment(c.productId)"> <b> + </b></button>
+                    <input type = "text" v-model="counts[c.productId]" />
+                    <button class="minus-btn"  v-on:click.prevent="decrement(c.productId)"> <b> - </b> </button>
+                    <button class="bin"  @click = " product.deletecart(c.productId) " >
                       <img class ="dust" src="/public/bin.png" alt="-" />
                     </button> 
                     <button class="rot"  @click = " patchcart({productId : c.productId , quantity: counts}) " >
@@ -499,7 +434,7 @@ width:90%;
 .cartcount{
   position: relative;
   font-family: 'Poppins', sans-serif;
-  border-radius: 50%;
+  border-radius: 10%;
         width: 20px;
         height: 20px;
       
