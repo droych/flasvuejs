@@ -1,9 +1,10 @@
 import { defineStore } from 'pinia'
-import { ref } from "vue"
+import { ref,reactive } from "vue"
 import { onMounted, onRenderTriggered } from "vue"
 
+
 export const useProductStore = defineStore('product',() => {
-const carts = ref(0)
+const carts = reactive({data: {}})
 async function api(url,options) {
   const response = await fetch(url,options);
   if (!response.ok) {
@@ -19,9 +20,10 @@ const requestOptions = {
   };
   api('/api/carts',requestOptions)
    
-    .then((data) => {carts.value = data})
+    .then((data) => {carts.data= data})
     .catch(error => {console.log(error.toString())})  
 }
+
 
 onMounted(() => getcart())
 

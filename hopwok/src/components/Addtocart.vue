@@ -53,7 +53,7 @@ product.getcart();
     <main>
         <div class="fetch">
           <div class="card">
-            <ul v-for="c in product.carts.items" :key="c.productId">
+            <ul v-for="c in product.carts.data.items" :key="c.productId">
               <li >
                 <div class = "container">
                   <img v-bind:src = "c.image" />

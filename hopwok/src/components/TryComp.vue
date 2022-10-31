@@ -1,5 +1,5 @@
 <script  setup>
-import {ref, onMounted } from 'vue';
+import {ref, onMounted,onUpdated } from 'vue';
 
     defineProps({
       msg :{
@@ -63,6 +63,7 @@ return await response.json();
 }
 let clicked = false
 function addtoCart(cart_item){
+  console.log(cart_item)
 const requestOptions = {
     method: 'POST',
     credentials: 'same-origin',
@@ -70,10 +71,11 @@ const requestOptions = {
      body: JSON.stringify(cart_item)
   };
   apis('/api/carts', requestOptions)
-    .then(response => response.json())
+    .then(response => console.log(response))
     .catch((error) => {console.log(error.toString())})
   
 }
+
     </script>
     
     <template>

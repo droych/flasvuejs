@@ -31,7 +31,7 @@ const { carts } = storeToRefs(product);
         <button class ="button3" @click='$router.push({name: "logout"})'> logout </button>
            
       </nav>
-      <div class = "cc"><img class ="cart" src =  "/public/shopp.png"  alt="-" /><p class = "cartcount">{{carts.count}}</p> </div>
+      <div class = "cc"><img class ="cart" src =  "/public/shopp.png"  alt="-" /><p class = "cartcount">{{carts.data.count}}</p> </div>
 
     </div>
 
