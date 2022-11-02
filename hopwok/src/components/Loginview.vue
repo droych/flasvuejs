@@ -12,6 +12,7 @@ const props = defineProps({
             type:String
         }
     }) 
+    
 const Loginuser = useLoginStore();
 const router = useRouter()
 function getCookie(name) {
@@ -21,7 +22,6 @@ function getCookie(name) {
 }
 
 function login(){
-
 const requestOptions = {
     method: "POST",
     headers: { 
