@@ -20,10 +20,6 @@ function getCookie(name) {
 }
 const router = useRouter()
 function logout(){
-  
-
-
-
 const requestOptions = {
     method: "POST",
     headers: { 

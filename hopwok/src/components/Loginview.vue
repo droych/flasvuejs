@@ -1,6 +1,7 @@
 <script  setup>
-import {ref} from 'vue'
+import {ref, onMounted} from 'vue'
 import {useRouter } from 'vue-router'
+import { useLoginStore } from "@/stores/LoginStore"
 const props = defineProps({
        email: {
         type: String,
@@ -11,6 +12,7 @@ const props = defineProps({
             type:String
         }
     }) 
+const Loginuser = useLoginStore();
 const router = useRouter()
 function getCookie(name) {
   const cookie = `; ${document.cookie}`;
@@ -19,6 +21,7 @@ function getCookie(name) {
 }
 
 function login(){
+
 const requestOptions = {
     method: "POST",
     headers: { 
@@ -30,11 +33,19 @@ const requestOptions = {
   fetch('api/login', requestOptions).then(response => response.json())
   .then(data => {if(data === 400){ window.alert("signup or check email")}
   else if(data === 409){ window.alert("wrong password")}
-  else{console.log(data); router.push({name: "products" }) }})
+  else{console.log(data); 
+  
+
+ // console.log(showlogout);
+  router.push({name: "products" });
+
 
   
-    
-   
+ }})
+
+  onMounted(() => {
+    Loginuser.login()
+  })
 }
     </script>
     
@@ -52,6 +63,8 @@ const requestOptions = {
                 <input type="password" class="form-control2" placeholder="password"  v-model="password"/>
                 </div>       
                 <button  type="submit"  class ="button" > Login </button> 
+          
+                
             </div>  
           </form>
     </main>
@@ -108,6 +121,20 @@ body{
   color: #111;
   border-radius: 8px;
   
+}
+.button3{
+  position: relative;
+  display: inline-block;
+  padding: 10px 20px;
+  background: #d54713;
+  margin-left: 10px;
+
+  font-weight: 600;
+  color: rgb(255, 254, 254);
+  border-radius: 8px;
+
+  
+
 }
 
 input {
