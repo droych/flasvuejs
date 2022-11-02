@@ -26,9 +26,9 @@ const { carts } = storeToRefs(product);
         <RouterLink to="/cart">cart</RouterLink>
         <button class ="button" @click='$router.push({name: "login"})'> login </button>
         <button class ="button2" @click='$router.push({name: "signup"})'> sign up </button>
-        <span v-if = "Loginuser.showlogout" >
-            <button class ="button3" @click='$router.push({name: "logout"})'> logout </button>
-        </span>      
+  
+        <button  v-if = "Loginuser.showlogout" class ="button3" @click='$router.push({name: "logout"})'> logout </button>
+            
       </nav>
       <div class = "cc"><img class ="cart" src =  "/public/shopp.png"  alt="-" /><p class = "cartcount">{{carts.data.count}}</p> </div>
     </div>

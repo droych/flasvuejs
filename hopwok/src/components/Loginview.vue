@@ -35,17 +35,15 @@ const requestOptions = {
   else if(data === 409){ window.alert("wrong password")}
   else{console.log(data); 
   
-
+    Loginuser.loginusername();
  // console.log(showlogout);
   router.push({name: "products" });
-
-
+  return Loginuser.showlogout.value
+  
   
  }})
 
-  onMounted(() => {
-    Loginuser.login()
-  })
+  
 }
     </script>
     
