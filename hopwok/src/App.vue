@@ -5,36 +5,33 @@ import {ref, onMounted } from 'vue';
 import { useProductStore } from "@/stores/productCart"
 import { storeToRefs } from 'pinia';
 import HelloWorld from './components/HelloWorld.vue'
-import AddtocartVue from './components/Addtocart.vue';
+import { useLoginStore } from "@/stores/LoginStore"
 const router = useRouter()
 
+const Loginuser = useLoginStore();
 const product = useProductStore();
 const { carts } = storeToRefs(product); 
   
 </script> 
 <template>
   <div>
-  <header>
-   
-
+<header>
     <div class="navigation-bar">
      <HelloWorld msg="ungenericmart" />
     <div id ="menu dev">
-    
        <nav >
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
         <RouterLink to="/products">Products</RouterLink>
         <RouterLink to="/cart">cart</RouterLink>
-        <button class ="button" @click='$router.push({name: "login"})'>login </button>
+        <button class ="button" @click='$router.push({name: "login"})'> login </button>
         <button class ="button2" @click='$router.push({name: "signup"})'> sign up </button>
-        <button class ="button3" @click='$router.push({name: "logout"})'> logout </button>
-           
+        <span v-if = "Loginuser.showlogout" >
+            <button class ="button3" @click='$router.push({name: "logout"})'> logout </button>
+        </span>      
       </nav>
       <div class = "cc"><img class ="cart" src =  "/public/shopp.png"  alt="-" /><p class = "cartcount">{{carts.data.count}}</p> </div>
-
     </div>
-
     </div>
 </header>
 
