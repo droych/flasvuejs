@@ -28,8 +28,9 @@ const requestOptions = {
   };
   
   fetch('/api/logout', requestOptions)
-    .then(response => response.json())
-    .then(data =>{console.log(data); router.push({name: "home"})})
+   
+    .then(data =>{console.log(data); router.push({name: "home"})  .then(() => { router.go() });})
+  
 
 }
 

@@ -24,8 +24,8 @@ const { carts } = storeToRefs(product);
         <RouterLink to="/about">About</RouterLink>
         <RouterLink to="/products">Products</RouterLink>
         <RouterLink to="/cart">cart</RouterLink>
-        <button class ="button" @click='$router.push({name: "login"})'> login </button>
-        <button class ="button2" @click='$router.push({name: "signup"})'> sign up </button>
+        <button  v-if = "!Loginuser.showlogout" class ="button" @click='$router.push({name: "login"})'> login </button>
+        <button  v-if = "!Loginuser.showlogout" class ="button2" @click='$router.push({name: "signup"})'> sign up </button>
   
         <button  v-if = "Loginuser.showlogout" class ="button3" @click='$router.push({name: "logout"})'> logout </button>
             
