@@ -1,18 +1,8 @@
 <script  setup>
 import {ref, onMounted } from 'vue';
 import LoginVue from '../views/Login.vue';
-
 import {useRouter } from 'vue-router'
-const props = defineProps({
-       email: {
-        type: String,
-      },
-  
-      password:
-        {
-            type:String
-        }
-    }) 
+const props = defineProps({email: {type: String},password:{type:String}}) 
 function getCookie(name) {
   const cookie = `; ${document.cookie}`;
   const parts = cookie.split(`; ${name}=`);
@@ -26,52 +16,24 @@ const requestOptions = {
     'Content-Type': 'application/json' ,
     'X-CSRF-TOKEN': getCookie('csrf_access_token')},
   };
-  
   fetch('/api/logout', requestOptions)
-   
-    .then(data =>{console.log(data); router.push({name: "home"})  .then(() => { router.go() });})
-  
-
+    .then(data =>{console.log(data); router.push({name: "home"}) .then(() => { router.go() });}) 
 }
-
-    </script>
-    
+</script>    
     <template>
-     
     <section>
       <main>
-     
         <div class="container" >
-        
             <p >Sure you want to logout?</p>
-                 
             <button  type="submit"  class ="button"  v-on:click= "logout" > Yes </button> 
-                  
-            <button class="button"  v-on:click.prevent="redirect()"> <b> NO</b> </button>
-               
-   
-            
+            <button class="button"  v-on:click.prevent="redirect()"> <b> NO</b> </button> 
         </div>
-
-  
-
     </main>
-    
-
-
-
-
-
-
   </section>
-    
-
-        
-
-    </template>
+</template>
     
     
-    <style scoped>
+<style scoped>
 
 body{
   display: flex;

@@ -63,7 +63,7 @@ function patchcart(cart_item){
       headers: {"Content-Type": "application/json" },
        body: JSON.stringify(cart_item)
     };
-  let url = `/api/cart/${cart_item}`
+  let url = `/api/cart/${cart_item.productId}`
   console.log(cart_item)
   async function api(url,requestOptions) {
   const response = await fetch(url,requestOptions);
@@ -74,10 +74,10 @@ function patchcart(cart_item){
   }
   
   
-    api(url, requestOptions).then(data => (cart_item = data.id)).catch((error) => {console.log(error.toString())})
+    api(url, requestOptions).then(data => {(cart_item = data.id);console.log(data)}).catch((error) => {console.log(error.toString())})
     getcart();
   }
   
-  return { carts, getcart,deletecart,} 
+  return { carts, getcart,deletecart,patchcart} 
 
 })

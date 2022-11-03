@@ -64,11 +64,8 @@ function dec()
         return counts.value = counts.value;
       }
 }
-
 const cart_counts = ref(1)
 function Cart(cart_item){
-
-
 async function api(url,options) {
   const response = await fetch(url,options);
 if (!response.ok) {
@@ -76,7 +73,6 @@ throw new Error(response.statusText);
 }
 return await response.json();
 }
-
 const requestOptions = {
     method: 'POST',
     credentials: 'same-origin',
@@ -84,22 +80,15 @@ const requestOptions = {
      body: JSON.stringify(cart_item)
   };
   api('/api/carts', requestOptions)
-    .then(response => response.json())
     .then(data => (cart_item = data.id))
     .catch((error) => {console.log(error.toString())})
-    
 }
-
-</script>
-    
+</script>   
 <template>
   <div>
-      <header>
-
-      <div> cart{{cart_counts}}</div>
-
-      </header>
-  
+    <header>
+      <div> cart{{ cart_counts }}</div>
+    </header>
     <section>
       <main>
       <div class = "fetch" >
@@ -113,29 +102,21 @@ const requestOptions = {
            <div class="quantity">
                 <button class="plus-btn"   v-on:click.prevent="inc">
                 <img class ="quantity-imagep" src="/public/plus.png" alt="+" />
-                </button>
-                
+                </button> 
                 <input type = "text" v-model="counts" />
-                
                 <button class="minus-btn"  v-on:click.prevent="dec">
                 <img class ="quantity-imagem" src="/public/minus-3.png" alt="-" />
                 </button>
            </div>
         <button type  = "submit" class ="button" v-on:click = "Cart({ product_id: product.id, quantity:counts})" > Add to cart </button>
         <button class ="button2"> Wishlist </button>
-
-
     </div>
     </div>
-
 </div> 
-
-
-
-  </main>
-  </section>
+</main>
+</section>
 </div>      
-  </template>
+</template>
     
     
     <style scoped>

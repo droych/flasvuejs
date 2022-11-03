@@ -17,20 +17,18 @@ const { carts } = storeToRefs(product);
   <div>
 <header>
     <div class="navigation-bar">
-     <HelloWorld msg="ungenericmart" />
+    <HelloWorld msg="ungenericmart" />
     <div id ="menu dev">
-       <nav >
+      <nav >
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
         <RouterLink to="/products">Products</RouterLink>
         <RouterLink to="/cart">cart</RouterLink>
         <button  v-if = "!Loginuser.showlogout" class ="button" @click='$router.push({name: "login"})'> login </button>
         <button  v-if = "!Loginuser.showlogout" class ="button2" @click='$router.push({name: "signup"})'> sign up </button>
-  
         <button  v-if = "Loginuser.showlogout" class ="button3" @click='$router.push({name: "logout"})'> logout </button>
-            
       </nav>
-      <div class = "cc"><img class ="cart" src =  "/public/shopp.png"  alt="-" /><p class = "cartcount">{{carts.data.count}}</p> </div>
+    <div class = "cc"><img class ="cart" src =  "/shopp.png"  alt="-" /><p class = "cartcount">{{carts.data.count}}</p> </div>
     </div>
     </div>
 </header>
