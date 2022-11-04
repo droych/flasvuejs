@@ -17,10 +17,9 @@ const product = useProductStore();
                 <div class = "container">
                   <img v-bind:src = "c.image" />
                   <div class="quantity">
-                
                     <p>{{ c.product_name }}</p>
                     <p>quantity:   {{ c.quantity }}</p>
-                    <p>price:      {{ c.product_rate }}</p> 
+                    <p>price:      {{ c.Total }}</p> 
                     <Addtocart :c = c.productId />
 
                 </div>
@@ -34,14 +33,8 @@ const product = useProductStore();
 </div>
 </template>
   
-<style>
-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  background: #131313;
-}
+<style scoped>
+
 
 .container {
   position: relative;
@@ -322,14 +315,6 @@ ul{
   color: #43484D;
   font-weight: 300;
 }
-  @media (min-width: 1024px) {
-    .products {
-      min-height: 20vh;
-      position: relative;
-      left: -250px; top: -250px;
-      display: flex;
-      align-items: center;
-    }
-  }
+ 
 </style>
   

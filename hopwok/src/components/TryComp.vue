@@ -1,89 +1,17 @@
 <script  setup>
 import {ref, onMounted,onUpdated } from 'vue';
-
-    defineProps({
-      msg :{
-        type: String,
-        required: true
-
-      },
-      image: {
-        type: String,
-        
-
-      },
-      Instock:{
-        type: Boolean
-        
-        
-      },
-
-      image :{
-        type:String
-      },
-     
-     
-      props:{
-        id:
-        {
-            type:Number
-        }
-
-     },
-     
-     
-
-    })
-
-
-
-
-const products = ref([])
-async function api(url) {
-  const response = await fetch(url);
-if (!response.ok) {
-throw new Error(response.statusText);
-}
-return await response.json();
-}
-function getproduct() {
-api('api/products')
-    .then((data) => {products.value = data})
-    .catch(error => {console.log(error.toString())
-  }
-)  
-}
-onMounted(() => getproduct())
-async function apis(url,options) {
-  const response = await fetch(url,options);
-if (!response.ok) {
-throw new Error(response.statusText);
-}
-return await response.json();
-}
-let clicked = false
-function addtoCart(cart_item){
-  console.log(cart_item)
-const requestOptions = {
-    method: 'POST',
-    credentials: 'same-origin',
-    headers: {"Content-Type": "application/json" },
-     body: JSON.stringify(cart_item)
-  };
-  apis('/api/carts', requestOptions)
-    .then(response => console.log(response))
-    .catch((error) => {console.log(error.toString())})
+import { useItemtStore } from "@/stores/ItemStore"
+import { storeToRefs } from 'pinia'
   
-}
-
-    </script>
-    
-    <template>
+const products = useItemtStore();
+products.getproduct();
+</script>
+<template>
      
     <section>
       <main>
       <div class="card-wrapper">
-      <ul class="container"  v-for="product in products" :key="product.id">
+      <ul class="container"  v-for="product in products.products" :key="product.id">
         <li > 
           <div class="card">
           <div class="imgBx">
@@ -97,7 +25,7 @@ const requestOptions = {
             <div class="price">
            <h3>Price : ₹{{product.product_rate}}</h3>
          </div>
-         <button class ="button"  v-on:click = "addtoCart({ product_id: product.id, quantity:1})">  {{ clicked ? "Added" : "Add to cart" }} </button>
+         <button class ="button"  v-on:click = "products.addtoCart({ product_id: product.id, quantity:1})">  {{ clicked ? "Added" : "Add to cart" }} </button>
       
     </div>
     </div>
@@ -130,14 +58,7 @@ const requestOptions = {
     padding-left: 1rem;
     padding-right: 1rem;
   }
-body{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  background: #131313;
 
-}
 
 .container{
   position: relative;

@@ -1,9 +1,15 @@
 <script setup>
 import TryComp from '@/components/TryComp.vue';
+
 </script>
 <template>
     <div > 
-     <TryComp />    
+    <main>
+     
+ 
+     <TryComp  /> 
+  
+    </main>
     </div>
 </template>
   

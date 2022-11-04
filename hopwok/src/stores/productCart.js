@@ -42,20 +42,11 @@ getcart();
   if (!response.ok) {
   throw new Error(response.statusText);
   }
-
   }
-  
   api(url, requestOptions)
   .catch((error) => {console.log(error.toString())})
-
-
-
-
-
 getcart();
-      
-  }
-  
+  }  
 function patchcart(cart_item){
     const requestOptions = {
       method: 'PATCH',
@@ -73,11 +64,10 @@ function patchcart(cart_item){
   return await response.json();
   }
   
-  
-    api(url, requestOptions).then(data => {(cart_item = data.id);console.log(data)}).catch((error) => {console.log(error.toString())})
+  api(url, requestOptions).then(data => {(cart_item = data.id);console.log(data)}).catch((error) => {console.log(error.toString())})
     getcart();
   }
   
-  return { carts, getcart,deletecart,patchcart} 
+  return { carts, getcart, deletecart, patchcart  } 
 
 })
